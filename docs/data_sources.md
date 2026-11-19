@@ -1,32 +1,35 @@
 # Data sources
 
-| Source | Role | Key limitation |
+These are the main datasets I plan to use. I will start with SEC filings, financial data, patents, and stock prices. The other sources can be added later if there is enough time.
+
+| Source | How I will use it | Main issue |
 |---|---|---|
-| [SEC EDGAR](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) | AI claims, risks, partnerships, products, and filing dates | Filing structure varies; follow SEC access policies |
-| [SEC Company Facts](https://www.sec.gov/Archives/edgar/daily-index/xbrl/companyfacts.zip) | Point-in-time fundamentals | Company-specific tags require normalization |
-| [SEC ticker mapping](https://www.sec.gov/files/company_tickers_exchange.json) | CIK, ticker, and exchange linkage | Tickers can change; use CIK as the primary issuer key |
-| [USPTO PatentsView](https://www.uspto.gov/ip-policy/economic-research/patentsview) | AI patents, citations, and assignees | Assignee-to-public-company resolution is nontrivial |
-| [Epoch AI](https://epoch.ai/data/ai-models) | Major model releases and AI event dates | Model notability is curated |
-| [Alpha Vantage](https://www.alphavantage.co/documentation/) | Prototype price data | Rate limits and historical coverage |
-| CRSP via WRDS | Research-quality returns and delistings | Requires institutional access |
-| [GDELT](https://www.gdeltproject.org/data.html) | Optional AI news and event candidates | Noisy entity matching; verify events independently |
+| [SEC EDGAR](https://www.sec.gov/search-filings/edgar-application-programming-interfaces) | Find AI claims, risks, products, partnerships, and filing dates | Filing formats are not always consistent |
+| [SEC Company Facts](https://www.sec.gov/Archives/edgar/daily-index/xbrl/companyfacts.zip) | Get revenue, R&D, capital spending, margins, and other financial data | Company specific tags may need to be cleaned |
+| [SEC ticker mapping](https://www.sec.gov/files/company_tickers_exchange.json) | Connect CIKs, company names, tickers, and exchanges | Tickers can change, so CIK will be the main company ID |
+| [USPTO PatentsView](https://www.uspto.gov/ip-policy/economic-research/patentsview) | Measure AI patent activity and patent citations | Patent owner names have to be matched to public companies |
+| [Epoch AI](https://epoch.ai/data/ai-models) | Create a timeline of important model releases | The list of notable models is curated |
+| [Alpha Vantage](https://www.alphavantage.co/documentation/) | Get stock prices for the first prototype | The free API has rate limits |
+| CRSP through WRDS | Run a stronger version of the stock return analysis | Access may depend on UW subscriptions |
+| [GDELT](https://www.gdeltproject.org/data.html) | Find possible AI news and company events | News data can be noisy and needs to be checked |
 
-## Proposed analytical table
+## Final analysis table
 
-One row per company-quarter:
+The goal is to create one row for each company and quarter. It may include:
 
-- `cik`, ticker, company name, sector
-- filing date and accession number
-- AI claim count and claim specificity
-- measurable-target and deadline indicators
-- named provider/model/chip relationships
-- AI patent count and citation-weighted patent measure
-- R&D and capital-expenditure changes
-- previous-claim fulfillment rate
-- Narrative–Reality Gap score
-- future abnormal return and volatility
-- future revenue and operating-margin changes
+- CIK, ticker, company name, and industry
+- Filing date and accession number
+- Number of AI claims
+- Claim specificity
+- Whether a claim includes a measurable target or deadline
+- Named AI providers, models, or chips
+- AI patent counts and citations
+- Changes in R&D and capital spending
+- Whether earlier claims were later supported
+- AI Narrative Reality Gap score
+- Future stock returns and volatility
+- Future revenue and operating margin changes
 
-## Data governance
+## Data rules
 
-Do not commit raw bulk filings, licensed price data, API keys, or credentials. Store source URLs, retrieval timestamps, checksums, and transformations so the analytical dataset can be reproduced.
+Large filing archives, paid market data, and API keys will not be uploaded to GitHub. I will save source links, download dates, and transformation steps so the final analysis can be reproduced.

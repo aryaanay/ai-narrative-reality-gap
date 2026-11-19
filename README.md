@@ -1,84 +1,92 @@
-# AI Narrative–Reality Gap
+# AI Narrative Reality Gap
 
-An evidence-grounded AI and finance project investigating whether companies that make strong AI claims without observable implementation subsequently experience weaker financial performance or stock-price reversals.
+Companies talk about AI all the time, but it is not always clear whether those claims are backed by real work. This project looks at the gap between what public companies say about AI and what they actually appear to be doing.
 
-## Research question
+## Main question
 
-**Can an evidence-grounded AI system identify corporate AI-washing, and does the gap between a company's AI claims and observable AI investment predict subsequent stock-price reversals or financial performance?**
+**Can we use AI to identify possible corporate AI washing, and does a large gap between AI claims and real investment help predict future stock performance or business results?**
 
-## Initial scope
+## Why this matters
 
-- **Universe:** S&P 100 companies
-- **Period:** 2022 onward
-- **Unit of analysis:** company-quarter
-- **Primary outcome:** 3–12 month abnormal stock return after AI-related claims
-- **Secondary outcomes:** realized volatility, revenue growth, and operating-margin change
+Some companies can point to real AI products, patents, partnerships, research spending, or measurable results. Others may use vague AI language without showing much evidence. Investors may initially respond to the story, then change their view once more information becomes available.
 
-## Method
+The goal is not to label a company as dishonest. The goal is to build a transparent score based on public evidence and test whether that score contains useful financial information.
 
-1. Collect 10-K, 10-Q, and 8-K filings from SEC EDGAR.
-2. Extract AI-related claims with exact supporting passages.
-3. Score claim specificity, measurability, deadlines, and named technologies.
-4. Measure observable commitment using patents, R&D, capex, partnerships, and later disclosures.
-5. Construct an interpretable **AI Narrative–Reality Gap**.
-6. Compare it with simple AI keyword-count baselines.
-7. Test its relationship with future returns and operating performance.
-8. Present company scores and evidence in an interactive dashboard.
+## Starting scope
 
-The language model will extract structured evidence; it will not assign an unexplained final score. The final index will use a documented formula or calibrated statistical model.
+- S&P 100 companies
+- Filings from 2022 onward
+- One observation per company and quarter
+- Main outcome: stock performance 3, 6, and 12 months after an AI claim
+- Other outcomes: volatility, revenue growth, and operating margin changes
 
-## Core data sources
+## Plan
+
+1. Download 10-K, 10-Q, and 8-K filings from SEC EDGAR.
+2. Find passages where companies discuss AI.
+3. Use an LLM to turn each passage into structured data.
+4. Record how specific each claim is and whether it includes a target, deadline, product, or named partner.
+5. Look for supporting evidence such as patents, R&D spending, capital spending, partnerships, and later updates.
+6. Build an AI Narrative Reality Gap score.
+7. Compare the score with a simple baseline that only counts AI keywords.
+8. Test whether either method helps explain future returns or business performance.
+9. Build a dashboard that shows each score and the evidence behind it.
+
+The LLM will help extract information from documents, but it will not make up the final score. The score will come from a clear formula or statistical model that can be inspected and tested.
+
+## Data
 
 - [SEC EDGAR APIs](https://www.sec.gov/search-filings/edgar-application-programming-interfaces)
-- [SEC Company Facts bulk data](https://www.sec.gov/Archives/edgar/daily-index/xbrl/companyfacts.zip)
-- [SEC ticker/exchange mapping](https://www.sec.gov/files/company_tickers_exchange.json)
+- [SEC Company Facts](https://www.sec.gov/Archives/edgar/daily-index/xbrl/companyfacts.zip)
+- [SEC company and ticker mapping](https://www.sec.gov/files/company_tickers_exchange.json)
 - [USPTO PatentsView](https://www.uspto.gov/ip-policy/economic-research/patentsview)
 - [Epoch AI model data](https://epoch.ai/data/ai-models)
-- [Alpha Vantage](https://www.alphavantage.co/documentation/) or institutional CRSP data
-- [GDELT](https://www.gdeltproject.org/data.html) as an optional event source
+- [Alpha Vantage](https://www.alphavantage.co/documentation/) or CRSP through UW
+- [GDELT](https://www.gdeltproject.org/data.html) as an optional news source
 
-See [docs/data_sources.md](docs/data_sources.md) for roles and limitations.
+More details are in [docs/data_sources.md](docs/data_sources.md).
 
-## Repository layout
+## Project structure
 
 ```text
-config/      Project configuration
-data/        Local data directories (large/raw files are ignored)
-docs/        Methodology and source documentation
-notebooks/   Exploration and analysis notebooks
-src/         Reusable collection, extraction, scoring, and analysis code
-tests/       Automated tests
-app/         Dashboard code
+config/      Project settings
+data/        Local data files
+docs/        Notes about the data and methods
+notebooks/   Exploration and analysis
+src/         Reusable Python code
+tests/       Tests
+app/         Dashboard
 ```
 
 ## Setup
 
 ```bash
 python -m venv .venv
-# Windows: .venv\Scripts\activate
-# macOS/Linux: source .venv/bin/activate
+# Windows
+.venv\Scripts\activate
+
 pip install -r requirements.txt
 ```
 
-Copy `config/example.yaml` to `config/local.yaml` and customize it. Never commit API keys.
+Copy `config/example.yaml` to `config/local.yaml` before changing the settings. API keys should go in a local `.env` file and should never be committed.
 
-## Planned milestones
+## Next steps
 
-- [ ] Freeze universe and company identifier table
-- [ ] Download SEC filings and XBRL facts
-- [ ] Define AI-claim annotation guide
-- [ ] Label the first 100 claims
-- [ ] Build keyword-count baseline
-- [ ] Build evidence-grounded claim extractor
-- [ ] Construct commitment variables and gap score
-- [ ] Run event study and panel regressions
-- [ ] Build dashboard
-- [ ] Publish results, limitations, and reproducibility notes
+- [ ] Finalize the company list
+- [ ] Build a table that connects CIKs, tickers, and company names
+- [ ] Download the first set of SEC filings
+- [ ] Write clear labeling rules for AI claims
+- [ ] Manually label the first 100 examples
+- [ ] Build a keyword baseline
+- [ ] Build the claim extraction pipeline
+- [ ] Create the first version of the score
+- [ ] Run the financial analysis
+- [ ] Build the dashboard
 
-## Status
+## Current status
 
-Project initialization and research design.
+The topic, research question, data sources, and initial project structure are set up. Data collection is next.
 
 ## License
 
-Code is available under the MIT License. Source datasets retain their original terms and licenses.
+The code is licensed under the MIT License. Each dataset keeps its own original license and terms.

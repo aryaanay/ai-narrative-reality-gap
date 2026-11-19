@@ -1,39 +1,65 @@
-# Methodology plan
+# Methodology
 
-## Hypothesis
+## Main idea
 
-Companies with highly specific and verifiable AI claims supported by observable commitment will have more persistent operating outcomes than firms with intense but vague AI narratives. A large narrative–reality gap may be followed by stock-price reversal or higher volatility.
+I expect companies with specific AI claims and visible follow through to have more reliable results than companies that use a lot of vague AI language. A large gap between the story and the evidence may be followed by weaker returns or higher volatility.
 
-## Baselines
+This is a hypothesis, not an assumption. The analysis may find little or no relationship, which would still be a useful result.
 
-1. No AI variables
-2. Raw count of the terms AI, artificial intelligence, generative AI, and machine learning
-3. Evidence-grounded claim features
-4. Full Narrative–Reality Gap score
+## What counts as an AI claim?
+
+An AI claim is a statement about an AI product, investment, partnership, expected source of revenue, cost saving, workforce change, or internal use.
+
+For each claim, I plan to record:
+
+- The exact passage
+- The filing and date
+- The type of claim
+- Any named product, model, chip, or partner
+- Whether the company gives a number or deadline
+- How specific the statement is
+- Whether later filings provide evidence that it happened
+
+## Models to compare
+
+1. A financial model with no AI variables
+2. A simple count of AI related keywords
+3. A model using structured claim features
+4. A model using the full Narrative Reality Gap score
+
+This comparison will show whether the more detailed approach adds anything beyond simply counting how often a company says AI.
+
+## Possible score
+
+```text
+Narrative Reality Gap =
+  claim intensity
++ vague language
++ earlier claims without follow through
+- patent activity
+- financial commitment
+- verified products and partnerships
+```
+
+Each part will be standardized before it is combined. I will start with equal weights because they are easy to explain, then test whether other reasonable weights change the results.
 
 ## Validation
 
-- Manually annotate at least 300 filing passages.
-- Measure extraction precision, recall, and agreement with human labels.
-- Use chronological train/test splits.
-- Preserve filing availability dates to avoid look-ahead bias.
-- Include size, industry, valuation, prior returns, and market returns as controls.
-- Report effect sizes and uncertainty, not only statistical significance.
+- Manually review at least 300 filing passages
+- Measure precision and recall for the claim extraction process
+- Split training and testing by time
+- Only use information that was public on the prediction date
+- Control for company size, industry, valuation, prior returns, and market returns
+- Report effect sizes and uncertainty
+- Run sensitivity checks using different score definitions and time horizons
 
-## Candidate score
+## Final product
 
-```text
-Narrative–Reality Gap =
-  standardized claim intensity
-+ standardized vagueness
-+ standardized unfulfilled prior promises
-- standardized patent activity
-- standardized financial commitment
-- standardized verified product/partnership evidence
-```
+The dashboard will let someone search for a company and see:
 
-Weights will be documented and tested through sensitivity analysis. A learned score will be compared with an equal-weight version.
-
-## Deliverable
-
-A dashboard showing a company's score, time series, cited filing evidence, observable commitment signals, and subsequent financial outcomes.
+- Its current score
+- How the score has changed
+- The filing passages behind the score
+- Evidence of real AI investment or follow through
+- Stock and financial outcomes after earlier claims
+- A clear explanation of how the score was calculated
