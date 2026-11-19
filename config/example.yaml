@@ -1,0 +1,22 @@
+project:
+  name: ai-narrative-reality-gap
+  start_year: 2022
+  universe: sp100
+
+sec:
+  user_agent: "Your Name your-email@example.com"
+  forms:
+    - 10-K
+    - 10-Q
+    - 8-K
+
+analysis:
+  horizons_months:
+    - 3
+    - 6
+    - 12
+  random_seed: 42
+
+paths:
+  raw_data: data/raw
+  processed_data: data/processed
